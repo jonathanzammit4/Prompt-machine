@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromptCraft — Grammarly for Prompting</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="promptm-styles.css">
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav>
+  <a class="logo" href="#">PromptCraft<span class="logo-dot">.</span></a>
+  <span class="nav-pill">✦ No login needed</span>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <p class="hero-label">✦ AI Prompt Optimizer</p>
+  <h1>Write prompts that <em>actually</em> work.</h1>
+  <p>Type any rough idea. Get a structured, powerful prompt — with expert feedback explaining every improvement.</p>
+</div>
+
+<!-- ── APP LAYOUT ── -->
+<div class="app">
+
+  <!-- LEFT: EDITOR PANEL -->
+  <div class="editor-panel">
+
+    <!-- Input Card -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Your Prompt</span>
+        <span class="char-count" id="char-count">0 characters</span>
+      </div>
+      <textarea
+        id="prompt-input"
+        placeholder="Type your rough prompt here… e.g. 'tell me about bitcoin'"
+        rows="6"
+      ></textarea>
+      <div class="examples-row">
+        <span class="examples-label">Try:</span>
+        <span class="example-chip" onclick="setExample('tell me about bitcoin')">tell me about bitcoin</span>
+        <span class="example-chip" onclick="setExample('help me study linux')">help me study linux</span>
+        <span class="example-chip" onclick="setExample('give me gym plan')">give me gym plan</span>
+        <span class="example-chip" onclick="setExample('explain ai')">explain ai</span>
+      </div>
+    </div>
+
+    <!-- Tone Selector Card -->
+    <div class="card" style="overflow:visible">
+      <div class="tone-row">
+        <span class="tone-label">Tone:</span>
+        <button class="tone-btn active" data-tone="balanced"          onclick="setTone(this)">Balanced</button>
+        <button class="tone-btn"        data-tone="technical"         onclick="setTone(this)">Technical</button>
+        <button class="tone-btn"        data-tone="beginner-friendly" onclick="setTone(this)">Beginner</button>
+        <button class="tone-btn"        data-tone="creative"          onclick="setTone(this)">Creative</button>
+        <button class="tone-btn"        data-tone="academic"          onclick="setTone(this)">Academic</button>
+      </div>
+    </div>
+
+    <!-- Analyze Button -->
+    <button class="btn-analyze" id="analyze-btn" onclick="analyzePrompt()">
+      <span class="btn-icon">⚡</span>
+      <span id="btn-text">Improve My Prompt</span>
+    </button>
+
+    <!-- Error Message -->
+    <div class="error-msg" id="error-msg"></div>
+
+    <!-- Output Card (hidden until analysis runs) -->
+    <div class="card output-card" id="output-card">
+      <div class="card-header">
+        <span class="card-title">✦ Improved Prompt</span>
+        <span
+          id="output-score-badge"
+          style="font-size:0.72rem;font-weight:500;background:var(--green-light);color:var(--green);padding:3px 9px;border-radius:20px;"
+        ></span>
+      </div>
+      <div id="loading-bar" class="loading-bar" style="display:none;margin:0 1.25rem;border-radius:1px;"></div>
+      <div class="output-body">
+        <div class="improved-prompt" id="improved-prompt-text"></div>
+        <div class="output-actions">
+          <button class="btn-sm primary" onclick="copyImproved()">Copy prompt</button>
+          <button class="btn-sm"         onclick="useImproved()">Use as input ↻</button>
+          <button class="btn-sm"         onclick="clearAll()">Clear</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /editor-panel -->
+
+  <!-- RIGHT: SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- Score Card -->
+    <div class="score-card">
+      <div class="score-label">Prompt quality score</div>
+      <div class="score-display">
+        <span class="score-number" id="score-number">—</span>
+        <span class="score-max"    id="score-max"></span>
+      </div>
+      <div class="score-bar-track">
+        <div class="score-bar-fill" id="score-bar"></div>
+      </div>
+      <div class="score-verdict" id="score-verdict">Analyze a prompt to see your score</div>
+    </div>
+
+    <!-- Suggestions Card -->
+    <div class="suggestions-card">
+      <div class="suggestions-header">
+        <div class="suggestions-title">Feedback &amp; Improvements</div>
+      </div>
+      <div class="suggestion-list" id="suggestion-list">
+        <div class="empty-state">
+          <div class="empty-icon">💡</div>
+          Suggestions will appear here after analysis
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /sidebar -->
+
+</div><!-- /app -->
+
+<div class="footer-note">PromptCraft · Powered by Claude AI · Your prompt is sent to the Anthropic API and not stored</div>
+
+<!-- JavaScript (loaded at end of body so HTML is ready first) -->
+<script src="promptm-script.js"></script>
+
+</body>
+</html>
